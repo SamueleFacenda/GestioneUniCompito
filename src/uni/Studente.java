@@ -1,8 +1,5 @@
 package uni;
 
-import sun.text.normalizer.NormalizerBase;
-
-import java.util.Objects;
 
 public class Studente  extends Persona{
     String matricola;

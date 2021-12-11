@@ -45,6 +45,12 @@ public class Universita {
         int stud=indexOfPersona(codiceFiscale);
         if(stud==-1 || !( iscritti[stud] instanceof Docente))
             throw new Exception("studnte non trovato");
-        (Studente)(iscritti[stud]).setMatricola(arrDip[dip].getNome().substring(2)+arrDip[dip].iscrivi(facolta));
+        ((Studente)iscritti[stud]).setMatricola(arrDip[dip].getNome().substring(2)+arrDip[dip].iscrivi(facolta));
+    }
+    public Studente getStudente(String codiceFiscale)throws Exception{
+        int stud=indexOfPersona(codiceFiscale);
+        if(stud==-1 || !( iscritti[stud] instanceof Docente))
+            throw new Exception("studnte non trovato");
+        return iscritti[stud].getNewInstance();
     }
 }
