@@ -1,14 +1,30 @@
 package uni;
 
+/**
+ * classe per la gestione di un'universita, con dipartimenti e facolta,
+ * con anche studenti e docenti iscritti all'universitá
+ */
 public class Universita {
     private Dipartimento[] arrDip;
     private Persona[] iscritti;
     private String nome;
+
+    /**
+     * costruttore solo con il nome
+     * @param nome
+     */
     public Universita(String nome){
         this.nome=nome;
         arrDip=new Dipartimento[2];
         iscritti=new Persona[2];
     }
+
+    /**
+     * costruttore con giá iscritti e dipartimenti
+     * @param nome
+     * @param persone
+     * @param dip
+     */
     public Universita(String nome,Persona[] persone, Dipartimento[] dip){
         this.nome=nome;
         iscritti=new Persona[persone.length+2];
@@ -50,6 +66,14 @@ public class Universita {
         while(i<iscritti.length && !codiceFIscale.equals(iscritti[i++].getCodiceFiscale()));
         return i==iscritti.length?-1:i;
     }
+
+    /**
+     * iscrive lo studente alla facolta
+     * @param nomeDip dipartiemento della facolta
+     * @param facolta nome della facolta
+     * @param codiceFiscale codice fiscale dello studente
+     * @throws Exception se uno dei nomi non viene trovato
+     */
     public void iscrivi(String nomeDip,String facolta,String codiceFiscale)throws Exception{
         int dip=indexOfDip(nomeDip);
         if(dip==-1)
@@ -57,14 +81,26 @@ public class Universita {
         int stud=indexOfPersona(codiceFiscale);
         if(stud==-1 || !( iscritti[stud] instanceof Docente))
             throw new Exception("studnte non trovato");
-        ((Studente)iscritti[stud]).setMatricola(arrDip[dip].getNome().substring(2)+arrDip[dip].iscrivi(facolta));
+        ((Studente)iscritti[stud]).setMatricola(arrDip[dip].iscrivi(facolta));
     }
+
+    /**
+     * ritorna una copia dello studente cercato
+     * @param codiceFiscale codice fiscale dello studente cercato
+     * @return copia dello studente
+     * @throws Exception se lo studente non viene trovato
+     */
     public Studente getStudente(String codiceFiscale)throws Exception{
         int stud=indexOfPersona(codiceFiscale);
         if(stud==-1 || !( iscritti[stud] instanceof Docente))
             throw new Exception("studnte non trovato");
         return iscritti[stud].getNewInstance();
     }
+
+    /**
+     * aggiunge un nuovo dipartimento
+      * @param in dipartimento da aggiungere
+     */
     public void addNewDip(Dipartimento in){
         int i=getFreeDip();
         if(i==-1){
@@ -73,6 +109,11 @@ public class Universita {
         }
         arrDip[i]=in.getNewINstance();
     }
+
+    /**
+     * aggiunge una nuova persona
+     * @param in persona da agguingere
+     */
     public void addNewIscritto(Persona in){
         int i=getFreePerson();
         if(i==-1){
@@ -81,6 +122,12 @@ public class Universita {
         }
         iscritti[i]=in.getNewInstance();
     }
+
+    /**
+     * rimuove l'iscritto scelto
+     * @param codeiceFIscale se l'iscritto non viene trovato
+     * @throws Exception
+     */
     public void removeIscritto(String codeiceFIscale)throws Exception{
         int i=indexOfPersona(codeiceFIscale);
         if(i==-1)
