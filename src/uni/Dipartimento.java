@@ -19,7 +19,7 @@ public class Dipartimento {
         return i==arr.length ? -1 : i;
     }
     private void resize(){
-        Facolta[] arr2=new Facolta[(int)Math.ceil(0.2*arr.length)];
+        Facolta[] arr2=new Facolta[(int)Math.ceil(1.2*arr.length)];
         for (int i = 0; i < arr.length; i++)
             arr2[i]=arr[i];
         arr=arr2;
@@ -48,5 +48,8 @@ public class Dipartimento {
     }
     public boolean contains(String facolta){
         return indexOf(facolta)!= -1;
+    }
+    public Dipartimento getNewINstance(){
+        return new Dipartimento(nome,arr);
     }
 }

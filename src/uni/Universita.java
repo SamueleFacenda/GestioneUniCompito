@@ -28,6 +28,18 @@ public class Universita {
         while(i<arrDip.length&& arrDip[i++]!=null);
         return i==arrDip.length? -1:i;
     }
+    private void resizeDip(){
+        Dipartimento[] arr2=new Dipartimento[(int)Math.ceil(1.2*arrDip.length)];
+        for (int i = 0; i < arr2.length; i++)
+            arr2[i]=arrDip[i];
+        arrDip=arr2;
+    }
+    private void resizeIsc(){
+        Persona[] arr2=new Persona[(int)Math.ceil(1.2* iscritti.length)];
+        for(int i=0;i< iscritti.length;i++)
+            arr2[i]=iscritti[i];
+        iscritti=arr2;
+    }
     private int indexOfDip(String nome){
         int i=0;
         while(i<arrDip.length && !nome.equals(arrDip[i++].getNome()));
@@ -52,5 +64,27 @@ public class Universita {
         if(stud==-1 || !( iscritti[stud] instanceof Docente))
             throw new Exception("studnte non trovato");
         return iscritti[stud].getNewInstance();
+    }
+    public void addNewDip(Dipartimento in){
+        int i=getFreeDip();
+        if(i==-1){
+            i=arrDip.length;
+            resizeDip();
+        }
+        arrDip[i]=in.getNewINstance();
+    }
+    public void addNewIscritto(Persona in){
+        int i=getFreePerson();
+        if(i==-1){
+            i=iscritti.length;
+            resizeIsc();
+        }
+        iscritti[i]=in.getNewInstance();
+    }
+    public void removeIscritto(String codeiceFIscale)throws Exception{
+        int i=indexOfPersona(codeiceFIscale);
+        if(i==-1)
+            throw new Exception("diparetimento non trovato");
+        iscritti[i]=null;
     }
 }
